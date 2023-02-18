@@ -11,7 +11,7 @@ module SubstitutionCipher
 
     def call
       @decrypted = decipher
-      ResultSaver.save_file(filename: Constants::DECRYPTED_FILENAME, data: decrypted)
+      save_text(Constants::DECRYPTED_FILENAME, decrypted)
     end
 
     private

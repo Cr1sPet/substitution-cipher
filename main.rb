@@ -6,19 +6,12 @@ require_relative 'encoder'
 require_relative 'decoder'
 require_relative 'plain_parser'
 require_relative 'result_saver'
-require 'debug'
+require 'json'
 include SubstitutionCipher
+include ResultSaver
 
-# begin
 plain = File.read(ARGV[0])
 key = KeyGenerator.call
-Encoder.call(key: key, plain: plain)
+Encoder.call(plain: plain)
 encrypted = File.read(Constants::ENCRYPTED_FILENAME)
 Decoder.call(key: key, encrypted: encrypted)
-# rescue StandardError => e
-#   if e.class == TypeError
-#     puts "Укажите путь к файлу в аргументе при запуске"
-#   end
-#   puts e.class
-#   puts e.message
-# end

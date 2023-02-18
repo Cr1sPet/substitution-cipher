@@ -10,7 +10,7 @@ module SubstitutionCipher
 
     def call
       @key = generate
-      ResultSaver.save_file(filename: Constants::KEY_FILENAME, data: key)
+      save_json(Constants::KEY_FILENAME, key)
       @key
     end
 
