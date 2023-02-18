@@ -9,18 +9,19 @@ module SubstitutionCipher
     end
 
     def call
-      generate
+      @key = generate
+      ResultSaver.save_file(filename: Constants::KEY_FILENAME, data: key)
+      @key
     end
 
     private
 
     def abc
-      RU_ABC
+      Constants::RU_ABC
     end
 
-    RU_ABC = [*'а'..'я'].join('').concat(' ')
-
     attr_accessor :values
+    attr_reader :update_saved_key, :key
 
     def generate
       abc.split('').each_with_object({}) do |ch, memo|
