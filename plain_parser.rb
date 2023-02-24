@@ -9,7 +9,7 @@ module SubstitutionCipher
     end
 
     def call
-      plain.downcase.split('').select { |el| [*'а'..'я'].join('').concat(' ').to_s.include? el }.join
+      parsed = plain.downcase.gsub(/[^а-я ]/, '')
     end
 
     private
