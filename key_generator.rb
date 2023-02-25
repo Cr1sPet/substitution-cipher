@@ -25,15 +25,21 @@ module SubstitutionCipher
     attr_reader :update_saved_key, :key
 
     def generate
-      abc.split('').each_with_object({}) do |ch, memo|
-        memo[ch] = get_value(ch)
+      abc.each_char.with_object({}) do |ch, key|
+        key[ch] = get_value(ch)
       end
+    rescue RuntimeError => e
+      retry
     end
 
     def get_value(except)
       val = values[rand(values.size)]
 
-      val = values[rand(values.size)] while val == except
+      while val == except
+        raise RuntimeError if values.length == 1
+
+        val = values[rand(values.size)]
+      end
 
       values.delete!(val)
       val
