@@ -28,7 +28,7 @@ module SubstitutionCipher
       abc.each_char.with_object({}) do |ch, key|
         key[ch] = get_value(ch)
       end
-    rescue RuntimeError => e
+    rescue RuntimeError
       retry
     end
 
