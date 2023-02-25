@@ -2,11 +2,11 @@
 
 module ArgsHelper
   def encode?
-    ARGV.include?('--encode') || without_mode?
+    ARGV.include?('--encode')
   end
 
   def decode?
-    ARGV.include?('--decode') || without_mode?
+    ARGV.include?('--decode')
   end
 
   def without_mode?
