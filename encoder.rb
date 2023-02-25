@@ -10,6 +10,7 @@ module SubstitutionCipher
     end
 
     def call
+      puts "================\nencode"
       @encrypted = cipher
       save_text(Constants::ENCRYPTED_FILENAME, encrypted)
     end
@@ -23,9 +24,7 @@ module SubstitutionCipher
     end
 
     def cipher
-      parsed_plain.split('').inject do |memo, el|
-        memo.concat(key[el])
-      end
+      parsed_plain.gsub(/./) { |char| key[char] }
     end
 
     def abc

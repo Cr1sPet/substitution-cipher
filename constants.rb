@@ -6,5 +6,6 @@ module SubstitutionCipher
     ENCRYPTED_FILENAME = 'encrypted.txt'
     KEY_FILENAME = 'key.json'
     DECRYPTED_FILENAME = 'decrypted.txt'
+    RU_POPULAR_CHAR = 'оефитнсрвлкмдпуяызбгьчйхяжюшцэъф'
   end
 end

@@ -9,6 +9,7 @@ module SubstitutionCipher
     end
 
     def call
+      puts "================\nkey generation"
       @key = generate
       save_json(Constants::KEY_FILENAME, key)
       @key

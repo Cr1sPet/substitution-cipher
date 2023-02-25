@@ -9,7 +9,7 @@ module SubstitutionCipher
     end
 
     def call
-      parsed = plain.downcase.gsub(/[^а-я ]/, '')
+      plain.downcase.gsub(/[^а-я ]/, '')
     end
 
     private
