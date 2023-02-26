@@ -4,20 +4,21 @@ module SubstitutionCipher
   class Decoder
     def self.call(...) = new(...).call
 
-    def initialize(encrypted:, key: nil)
+    def initialize(input:, output: nil, key: nil)
       @key = key || read_key
-      @encrypted = encrypted
+      @encrypted = FileReader.read(input)
+      @output_filename = output || Constants::DECRYPTED_FILENAME
     end
 
     def call
       puts "================\ndecode"
       @decrypted = decipher
-      save_text(Constants::DECRYPTED_FILENAME, decrypted)
+      save_text(output_filename, decrypted)
     end
 
     private
 
-    attr_reader :key, :parsed_plain, :encrypted, :decrypted
+    attr_reader :key, :parsed_plain, :encrypted, :decrypted, :output_filename
 
     def decipher
       encrypted.gsub(/./) { |char| key.key(char) }

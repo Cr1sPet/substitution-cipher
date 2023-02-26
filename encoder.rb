@@ -4,20 +4,21 @@ module SubstitutionCipher
   class Encoder
     def self.call(...) = new(...).call
 
-    def initialize(plain:, key: nil)
+    def initialize(input:, output: nil, key: nil)
       @key = key || read_key
-      @parsed_plain = PlainParser.call(plain: plain)
+      @parsed_plain = PlainParser.call(plain: FileReader.read(input))
+      @output_filename = output || Constants::ENCRYPTED_FILENAME
     end
 
     def call
       puts "================\nencode"
       @encrypted = cipher
-      save_text(Constants::ENCRYPTED_FILENAME, encrypted)
+      save_text(output_filename, encrypted)
     end
 
     private
 
-    attr_reader :key, :parsed_plain, :encrypted
+    attr_reader :key, :parsed_plain, :encrypted, :output_filename
 
     def read_key
       JSON.parse(File.read(Constants::KEY_FILENAME))
