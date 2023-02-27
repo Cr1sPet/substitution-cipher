@@ -6,15 +6,12 @@ class Parser
     OptionParser.new do |opt|
       opt.on('-inFILENAME', '--input_file FILENAME') { |o| options[:input_file] = o }
       opt.on('-oFILENAME', '--output_file FILENAME') { |o| options[:output_file] = o }
-      opt.on('-mENCODE|DECODE', '--mode ENCODE|DECODE') { |o| options[:mode] = o }
+      opt.on('-mENCODE|DECODE', '--mode ENCODE|DECODE|KEY') { |o| options[:mode] = o }
       opt.on('-h', '--help', 'Prints this help') do
         puts opt
         exit
       end
     end.parse!
-    
-    raise 'Input filename is invalid' if options[:input_file].nil? || !File.readable?(options[:input_file])
-
     options
   end
 end

@@ -12,11 +12,14 @@ require_relative 'decoder'
 require_relative 'plain_parser'
 require_relative 'result_saver'
 require_relative 'parser'
+require_relative 'key_restorer'
 include SubstitutionCipher
 include ResultSaver
 
 def start(opts)
   case opts[:mode]
+  when 'KEY'
+    KeyRestorer.call(encrypted_filename: opts[:input_file], decrypted_filename: opts[:output_file])
   when 'ENCODE'
     KeyGenerator.call
     Encoder.call(input: opts[:input_file], output: opts[:output_file])
@@ -30,7 +33,6 @@ ARGV << '-h' if ARGV.empty?
 
 begin
   opts = Parser.parse
-
   start(opts)
 rescue StandardError => e
   puts e.message

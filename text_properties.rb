@@ -6,7 +6,7 @@ require_relative 'constants'
 
 class TextProperties
   def initialize(text)
-    @text = text
+    @text = FileReader.read(text)
   end
 
   def frequency_table
@@ -35,14 +35,22 @@ Rendundance:
 #{rendundance}"
   end
 
-  private
-
-  attr_accessor :text
-
   def count_frequency_table
+    char_frequency.update(char_frequency) { |_k, v| v.to_f / text.size }
+  end
+
+  def char_frequency
+    @char_frequency ||= count_char_frequency
+  end
+
+  def count_char_frequency
     counts = text.each_char.each_with_object(Hash.new(0)) do |char, memo|
       memo[char] += 1
     end
-    counts.update(counts) { |_k, v| v.to_f / text.size }.sort_by { |_k, v| v }.reverse.to_h
+    counts.sort_by { |_k, v| v }.reverse.to_h
   end
+
+  private
+
+  attr_accessor :text
 end

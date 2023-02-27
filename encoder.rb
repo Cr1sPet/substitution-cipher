@@ -8,12 +8,11 @@ module SubstitutionCipher
       @key = key || read_key
       @parsed_plain = PlainParser.call(plain: FileReader.read(input))
       @output_filename = output || Constants::ENCRYPTED_FILENAME
+      puts "================\nencode"
     end
 
     def call
-      puts "================\nencode"
-      @encrypted = cipher
-      save_text(output_filename, encrypted)
+      save_text(output_filename, cipher)
     end
 
     private

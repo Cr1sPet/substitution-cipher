@@ -8,12 +8,11 @@ module SubstitutionCipher
       @key = key || read_key
       @encrypted = FileReader.read(input)
       @output_filename = output || Constants::DECRYPTED_FILENAME
+      puts "================\ndecode"
     end
 
     def call
-      puts "================\ndecode"
-      @decrypted = decipher
-      save_text(output_filename, decrypted)
+      save_text(output_filename, decipher)
     end
 
     private

@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 module SubstitutionCipher
-  class KeyGenerator
+  class KeyRestorer
     def self.call(...) = new(...).call
 
-    def initialize
-      @values = abc.dup
-      puts "================\nkey generation"
+    def initialize(encrypted_filename:, decrypted_filename:)
+      @encrypted = encrypted_filename
+      @decrypted = decrypted_filename
     end
 
     def call
-      save_json(Constants::KEY_FILENAME, generate)
+      puts "================\nkey restoring"
+      enc_freq = TextProperties.new(encrypted).char_frequency
+      dec_freq = TextProperties.new(decrypted).char_frequency
+      key = enc_freq.keys.zip(dec_freq.keys).to_h.sort.to_h
+      ResultSaver.save_json(Constants::RESTORED_KEY_FILENAME, key)
     end
 
     private
@@ -19,8 +23,7 @@ module SubstitutionCipher
       Constants::RU_ABC
     end
 
-    attr_accessor :values
-    attr_reader :update_saved_key, :key
+    attr_reader :update_saved_key, :key, :encrypted, :decrypted
 
     def generate
       abc.each_char.with_object({}) do |ch, key|
